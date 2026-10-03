@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
 
-    VehicleRepository vehicleRepository;
-    VehicleMapperImpl vehicleMapper;
+    private final VehicleRepository vehicleRepository;
+    private final VehicleMapperImpl vehicleMapper;
 
     @Override
     @Transactional
