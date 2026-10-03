@@ -3,6 +3,8 @@ package com.techtech.parking.services;
 import com.techtech.parking.dto.VehicleDto;
 import com.techtech.parking.entities.Vehicle;
 
+import java.util.List;
+
 public interface VehicleService {
 
     VehicleDto create(VehicleDto dto);
@@ -14,5 +16,7 @@ public interface VehicleService {
     VehicleDto getVehicleById(Long id);
 
     Vehicle findById(Long id);
+
+    List<VehicleDto> getAllVehicles ();
 
 }

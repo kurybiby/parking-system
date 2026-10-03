@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
@@ -57,5 +60,13 @@ public class VehicleServiceImpl implements VehicleService {
     public Vehicle findById(Long id) {
         return vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Вехикле отсутствует по такому id: " + id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<VehicleDto> getAllVehicles() {
+        return vehicleRepository.findAll().stream()
+                .map(vehicleMapper::toDto)
+                .collect(Collectors.toList());
     }
 }
