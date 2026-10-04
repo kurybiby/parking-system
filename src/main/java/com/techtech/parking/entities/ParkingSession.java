@@ -1,10 +1,12 @@
 package com.techtech.parking.entities;
 
+import com.techtech.parking.enums.ParkingSessionStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.cglib.core.Local;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -27,10 +29,17 @@ public class ParkingSession {
     private ParkingSpace parkingSpace;
 
     @Column(name = "enty_time")
-    private LocalDateTime entyTime;
+    private LocalDateTime entryTime;
 
     @Column(name = "exit_time")
-    private LocalDateTime exit;
+    private LocalDateTime exitTime;
+
+    @Column(name = " cost")
+    private BigDecimal cost;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private ParkingSessionStatus status;
 
 }
 
