@@ -37,7 +37,9 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     @Transactional
     public ParkingSessionDto entry(Long vehicleId, Long spaceId) {
         Vehicle vehicle =vehicleRepository.findById(vehicleId).orElseThrow(() -> new ResourceNotFoundException("авто не найдено"));
-        ParkingSpace parkingSpace =parkingSpaceRepository.findById(spaceId).orElseThrow(() -> new ResourceNotFoundException("авто не найдено"));
+
+        //Обработка на случай двойного въезда
+        ParkingSpace parkingSpace =parkingSpaceRepository.findByIdForUpdate(spaceId).orElseThrow(() -> new ResourceNotFoundException("авто не найдено"));
 
         if (parkingSessionRepository.existsByVehicleIdAndStatus(vehicleId, ParkingSessionStatus.ACTIVE)) {
             throw new ParkingBusinessException("Vehicle is already parked");
