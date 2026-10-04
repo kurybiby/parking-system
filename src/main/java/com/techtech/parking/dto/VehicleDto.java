@@ -16,6 +16,6 @@ public class VehicleDto {
     @NotNull
     private String licensePlate;
 
-    @NotBlank
+    @NotNull(message = "vehicleType is required")
     private VehicleType vehicleType;
 }
