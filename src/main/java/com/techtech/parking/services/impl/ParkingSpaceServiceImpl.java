@@ -2,6 +2,7 @@ package com.techtech.parking.services.impl;
 
 import com.techtech.parking.dto.request.ParkingSpaceRequest;
 import com.techtech.parking.dto.response.ParkingSpaceResponse;
+import com.techtech.parking.entities.ParkingSpace;
 import com.techtech.parking.enums.ParkingSessionStatus;
 import com.techtech.parking.exceptions.ParkingBusinessException;
 import com.techtech.parking.exceptions.ResourceNotFoundException;
@@ -11,6 +12,7 @@ import com.techtech.parking.repository.ParkingSpaceRepository;
 import com.techtech.parking.services.ParkingSpaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -49,12 +51,21 @@ public class ParkingSpaceServiceImpl implements ParkingSpaceService {
     }
 
     @Override
+    @Transactional
     public ParkingSpaceResponse update(Long id, ParkingSpaceRequest request) {
-        if (parkingSpaceRepository.existsByNumberOfSpace(request.numberOfSpace())) {
-            return mapper.toResponse(parkingSpaceRepository.updateById(id));
-        } else {
-            throw new ResourceNotFoundException("Невозможно обновить несуществуещее место");
+        ParkingSpace place = parkingSpaceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "не нашел такого места"));
+
+        if (parkingSpaceRepository.existsByNumberOfSpaceAndIdNot(request.numberOfSpace(), id)) {
+            throw new ParkingBusinessException(
+                    "Такое место уже есть");
         }
+
+        place.setNumberOfSpace(request.numberOfSpace());
+        place.setVehicleType(request.vehicleType());
+
+        return mapper.toResponse(place);
     }
 
     @Override

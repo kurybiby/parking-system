@@ -17,6 +17,6 @@ public class Vehicle {
     @Column(name = "license_plate", nullable = false)
     private String licensePlate;
 
-    @Column(name = "license_plate", nullable = false)
+    @Column(name = "vehicle_type", nullable = false)
     private VehicleType vehicleType;
 }

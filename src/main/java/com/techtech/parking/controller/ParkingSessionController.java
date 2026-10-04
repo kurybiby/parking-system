@@ -23,7 +23,7 @@ public class ParkingSessionController {
     }
 
     @PostMapping("/exit")
-    public ParkingSessionDto entry (Long vehicleId){
+    public ParkingSessionDto exit (Long vehicleId){
         return parkingSessionService.exit(vehicleId);
     }
 }

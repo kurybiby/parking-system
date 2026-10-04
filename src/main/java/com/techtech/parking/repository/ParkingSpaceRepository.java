@@ -17,8 +17,6 @@ public interface ParkingSpaceRepository extends JpaRepository<ParkingSpace, Long
 
     boolean existsByNumberOfSpace(Long numberOfSpace);
 
-    ParkingSpace updateById (Long id);
-
     boolean existsByNumberOfSpaceAndIdNot(Long numberOfSpace, Long id);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
